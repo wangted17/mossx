@@ -824,11 +824,6 @@ function MainApp() {
         };
       });
       setCollaborationUiModeByThread((prev) => {
-        // Keep "unselected" threads unselected. Only reconcile UI mode if this
-        // thread already has an explicit UI selection (user toggle / slash mode).
-        if (!(threadId in prev)) {
-          return prev;
-        }
         if (prev[threadId] === effectiveUiMode) {
           return prev;
         }
@@ -1971,14 +1966,15 @@ function MainApp() {
       }
       return;
     }
-    const hasExplicitSelection =
-      selectedCollaborationModeId === "plan" ||
-      selectedCollaborationModeId === "code";
     const threadChanged = lastCodexModeSyncThreadRef.current !== activeThreadId;
-    if (!threadChanged || hasExplicitSelection) {
+    if (!threadChanged) {
       return;
     }
     lastCodexModeSyncThreadRef.current = activeThreadId;
+    if (!activeThreadId) {
+      codexComposerModeRef.current = null;
+      return;
+    }
     codexComposerModeRef.current = "code";
     if (selectedCollaborationModeId !== "code") {
       setSelectedCollaborationModeId("code");

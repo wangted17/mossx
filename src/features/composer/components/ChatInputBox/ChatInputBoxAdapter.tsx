@@ -363,15 +363,6 @@ export const ChatInputBoxAdapter = forwardRef<ChatInputBoxHandle, ChatInputBoxAd
       getFileTags: () => chatInputRef.current?.getFileTags() ?? [],
     }));
 
-    // Sync external text changes to ChatInputBox
-    const lastTextRef = useRef(text);
-    useEffect(() => {
-      if (text !== lastTextRef.current) {
-        lastTextRef.current = text;
-        chatInputRef.current?.setValue(text);
-      }
-    }, [text]);
-
     useEffect(() => {
       if (alwaysThinkingEnabled !== undefined) {
         return;
@@ -409,7 +400,6 @@ export const ChatInputBoxAdapter = forwardRef<ChatInputBoxHandle, ChatInputBoxAd
 
     // Handle input from ChatInputBox -> Composer text state
     const handleInput = useCallback((content: string) => {
-      lastTextRef.current = content;
       onTextChange(content, null);
     }, [onTextChange]);
 

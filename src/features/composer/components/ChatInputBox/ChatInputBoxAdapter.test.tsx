@@ -168,4 +168,21 @@ describe('ChatInputBoxAdapter toggle bridge', () => {
     };
     expect(latest.sendShortcut).toBe('cmdEnter');
   });
+
+  it('forwards input text changes without runtime errors', async () => {
+    const onTextChange = vi.fn();
+    renderAdapter({ onTextChange });
+
+    await waitFor(() => expect(mockState.latestProps).toBeTruthy());
+
+    const latest = mockState.latestProps as {
+      onInput?: (content: string) => void;
+    };
+    expect(typeof latest.onInput).toBe('function');
+
+    expect(() => {
+      latest.onInput?.('hello');
+    }).not.toThrow();
+    expect(onTextChange).toHaveBeenCalledWith('hello', null);
+  });
 });
