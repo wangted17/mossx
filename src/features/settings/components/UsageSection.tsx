@@ -46,7 +46,7 @@ export function UsageSection({
   const { t } = useTranslation();
   const [scope, setScope] = useState<UsageScope>("current");
   const [activeTab, setActiveTab] = useState<UsageTab>("overview");
-  const [dateRange, setDateRange] = useState<DateRange>("30d");
+  const [dateRange, setDateRange] = useState<DateRange>("7d");
   const [sessionPage, setSessionPage] = useState(1);
   const [sessionSortBy, setSessionSortBy] = useState<"cost" | "time">("cost");
   const [loading, setLoading] = useState(false);

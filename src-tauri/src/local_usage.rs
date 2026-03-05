@@ -79,7 +79,7 @@ pub(crate) async fn local_usage_statistics(
 ) -> Result<LocalUsageStatistics, String> {
     let scope = scope.unwrap_or_else(|| "current".to_string());
     let provider = provider.unwrap_or_else(|| "claude".to_string());
-    let date_range = date_range.unwrap_or_else(|| "30d".to_string());
+    let date_range = date_range.unwrap_or_else(|| "7d".to_string());
     let workspace_path = workspace_path.and_then(|value| {
         let trimmed = value.trim();
         if trimmed.is_empty() {
